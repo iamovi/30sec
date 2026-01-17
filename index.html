@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>30sec</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="logo"><i class="fas fa-music"></i> <span>Music</span></div>
+    
+    <div class="nav-item active" onclick="switchView('search')">
+      <i class="fas fa-search"></i><span>Search</span>
+    </div>
+    <div class="nav-item" onclick="switchView('favorites')">
+      <i class="fas fa-heart"></i><span>Favorites</span>
+    </div>
+    
+    <div class="nav-section">Playlists</div>
+    <div id="playlistList"></div>
+    <div class="new-playlist" onclick="showNewPlaylistModal()">
+      <span><i class="fas fa-plus"></i> New Playlist</span>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <header id="contentTitle"><i class="fas fa-music"></i> 30sec. Music Player</header>
+
+    <div id="searchSection">
+      <div class="search">
+        <input id="searchInput" placeholder="Search artist or song" onkeypress="if(event.key==='Enter') searchMusic()">
+        <button onclick="searchMusic()"><i class="fas fa-search"></i> Search</button>
+      </div>
+    </div>
+
+    <div class="content-header">
+      <h2 id="viewTitle">Search Results</h2>
+      <div class="view-toggle">
+        <button class="view-btn active" onclick="toggleView('grid')"><i class="fas fa-th"></i> Grid</button>
+        <button class="view-btn" onclick="toggleView('list')"><i class="fas fa-list"></i> List</button>
+      </div>
+    </div>
+
+    <div class="container" id="songs"></div>
+  </div>
+</div>
+
+<!-- PLAYER -->
+<div class="player" id="player" style="display:none;">
+  <div class="progress-section">
+    <span class="time" id="currentTime">0:00</span>
+    <div class="progress">
+      <input type="range" id="progress" value="0" min="0" max="100">
+    </div>
+    <span class="time" id="duration">0:00</span>
+  </div>
+  <div class="player-top">
+    <img id="playerImg" alt="Album Art">
+    <div class="player-info">
+      <h4 id="playerTitle"></h4>
+      <p id="playerArtist"></p>
+    </div>
+    <div class="controls">
+      <button onclick="toggleShuffle()" id="shuffleBtn" title="Shuffle"><i class="fas fa-random"></i></button>
+      <button onclick="prev()" title="Previous"><i class="fas fa-step-backward"></i></button>
+      <button class="play-btn" onclick="togglePlay()" id="playBtn" title="Play/Pause"><i class="fas fa-play"></i></button>
+      <button onclick="next()" title="Next"><i class="fas fa-step-forward"></i></button>
+      <button onclick="toggleRepeat()" id="repeatBtn" title="Repeat"><i class="fas fa-redo"></i></button>
+      <button onclick="toggleQueue()" title="Queue"><i class="fas fa-list-ul"></i></button>
+    </div>
+    <div class="volume-control">
+      <button onclick="toggleMute()" id="volumeBtn" title="Volume"><i class="fas fa-volume-up"></i></button>
+      <input type="range" id="volume" value="100" min="0" max="100">
+    </div>
+  </div>
+</div>
+
+<!-- QUEUE PANEL -->
+<div class="queue-panel" id="queuePanel">
+  <div class="queue-header">
+    <h3><i class="fas fa-list-ul"></i> Queue</h3>
+    <button class="close-queue" onclick="toggleQueue()"><i class="fas fa-times"></i></button>
+  </div>
+  <div id="queueList"></div>
+</div>
+
+<!-- NEW PLAYLIST MODAL -->
+<div class="modal" id="playlistModal">
+  <div class="modal-content">
+    <h3>Create New Playlist</h3>
+    <input type="text" id="playlistName" placeholder="Playlist name" onkeypress="if(event.key==='Enter') createPlaylist()">
+    <div class="modal-buttons">
+      <button class="btn-cancel" onclick="closePlaylistModal()">Cancel</button>
+      <button class="btn-create" onclick="createPlaylist()">Create</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD TO PLAYLIST MODAL -->
+<div class="modal" id="addToPlaylistModal">
+  <div class="modal-content">
+    <h3>Add to Playlist</h3>
+    <div id="playlistSelectList"></div>
+    <div class="modal-buttons">
+      <button class="btn-cancel" onclick="closeAddToPlaylistModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW PLAYLIST MODAL -->
+<div class="modal" id="viewPlaylistModal">
+  <div class="modal-content" style="max-width: 500px;">
+    <h3 id="viewPlaylistTitle"></h3>
+    <div class="playlist-songs" id="playlistSongs"></div>
+    <div class="modal-buttons">
+      <button class="btn-cancel" onclick="closeViewPlaylistModal()">Close</button>
+      <button class="btn-create" onclick="playCurrentPlaylist()">Play All</button>
+    </div>
+  </div>
+</div>
+
+<audio id="audio"></audio>
+
+<script src="script.js"></script>
+</body>
+</html>
