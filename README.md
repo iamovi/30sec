@@ -1,6 +1,8 @@
 # 🎵 30sec Music Player
 
-A simple web music player for discovering songs. Search and play 30-second previews from iTunes.
+A web music player for discovering songs. Search and play 30-second previews from iTunes.
+
+**[🎧 Try it Live](https://iamovi.github.io/30sec)**
 
 ## What is this?
 
